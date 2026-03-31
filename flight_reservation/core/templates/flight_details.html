@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Voo</title>
+</head>
+<body>
+    <h1>Detalhes do Voo: {{ flight.id }}</h1>
+        <p>Origem: {{ flight.origin }}</p>
+        <p>Destino:{{ flight.destination }}</p>
+        <p>Avião: {{ flight.airplane }}</p>
+    <h2>Passageiros: </h2>
+    <ul>
+        {% for reservation in reservations %}
+            <li>{{ reservation.customer.name }} - Seat: {{ reservation.seat_number }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Assentos Ocupados: </h2>
+    <p>{{ occupied_seats|join:", " }}</p>
+</body>
+</html>
