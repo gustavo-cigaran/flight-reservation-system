@@ -14,5 +14,14 @@
             </li>
         {% endfor %}
     </ul>
+
+    {% if user.is_authenticated %}
+        <p>Olá, {{ user.username }}</p>
+
+        <form action="/logout/" method="POST">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% endif %}
 </body>
 </html>
