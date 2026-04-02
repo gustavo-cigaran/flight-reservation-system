@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .forms import ReservationForm
 from .models import Flight, Customer, Reservation
 
@@ -6,6 +7,7 @@ def flight_list(request):
     flights = Flight.objects.all()
     return render(request, 'flight_list.html', {'flights': flights})
 
+@login_required
 def create_reservation(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
