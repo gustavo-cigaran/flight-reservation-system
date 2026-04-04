@@ -1,7 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import ReservationForm
+from .forms import ReservationForm, AirplaneForm
 from .models import Flight, Customer, Reservation
+
+@login_required
+def airplane_registration(request):
+    if request.method == 'POST':
+        form = AirplaneForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/flights/')
+    else:
+        form = AirplaneForm()
+
+    return render(request, 'airplane_registration.html', {'form': form})
 
 def flight_list(request):
     flights = Flight.objects.all()

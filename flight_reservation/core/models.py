@@ -1,8 +1,13 @@
 from django.db import models
 
 class Airplane(models.Model):
-    identifier = models.CharField(max_length=100)
-    capacity = models.IntegerField()
+    identifier = models.CharField(
+        max_length=100, 
+        unique=True,
+        error_messages={
+            'unique': 'Já existe um avião com este identificador. Por favor, escolha outro.'
+        })
+    capacity = models.PositiveIntegerField()
 
     def __str__(self):
         return self.identifier
