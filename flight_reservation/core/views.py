@@ -60,6 +60,19 @@ def create_flight(request):
     return render(request, 'flight_registration.html', {'form': form})
 
 @login_required
+def update_flight(request, flight_id):
+    flight = get_object_or_404(Flight, id=flight_id)
+    if request.method == 'POST':
+        form = FlightForm(request.POST, instance=flight)
+        if form.is_valid():
+            form.save()
+            return redirect('/flights/')
+    else:
+        form = FlightForm(instance=flight)
+
+    return render(request, 'edit_flight.html', {'form': form})
+
+@login_required
 def create_reservation(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
