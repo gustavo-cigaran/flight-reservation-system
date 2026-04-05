@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path
+from core.forms import LoginForm
 from core.views import airplane_registration, flight_list, create_reservation, edit_reservation, delete_reservation, customer_list, show_flight_reservation
 
 urlpatterns = [
-    path('', auth_views.LoginView.as_view(), name='login'),
+    path('', auth_views.LoginView.as_view(authentication_form=LoginForm), name='login'),
     path('admin/', admin.site.urls),
     path('airplanes/register/', airplane_registration),
     path('flights/', flight_list, name='flight_list'),
