@@ -7,13 +7,13 @@ from core.views import *
 urlpatterns = [
     path('', auth_views.LoginView.as_view(authentication_form=LoginForm), name='login'),
     path('admin/', admin.site.urls),
-    path('airplanes/', airplane_list),
-    path('airplanes/register/', airplane_registration),
-    path('flights/', flight_list, name='flight_list'),
+    path('airplanes/', list_airplanes),
+    path('airplanes/register/', create_airplane),
+    path('flights/', list_flights, name='flight_list'),
     path('reserve/', create_reservation),
-    path('flights/edit/<int:reservation_id>/', edit_reservation),
+    path('flights/edit/<int:reservation_id>/', update_reservation),
     path('flights/delete/<int:reservation_id>/', delete_reservation),
-    path('customers/', customer_list),
-    path('flights/<int:flight_id>/',show_flight_reservation),
+    path('customers/', list_customers),
+    path('flights/<int:flight_id>/', flight_detail, name='flight_detail'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout')
 ]

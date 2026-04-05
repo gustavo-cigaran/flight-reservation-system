@@ -4,7 +4,7 @@ from .forms import ReservationForm, AirplaneForm
 from .models import Flight, Customer, Reservation, Airplane
 
 @login_required
-def airplane_registration(request):
+def create_airplane(request):
     if request.method == 'POST':
         form = AirplaneForm(request.POST)
         if form.is_valid():
@@ -15,11 +15,13 @@ def airplane_registration(request):
 
     return render(request, 'airplane_registration.html', {'form': form})
 
-def airplane_list(request):
+@login_required
+def list_airplanes(request):
     airplanes = Airplane.objects.all()
     return render(request, 'airplane_list.html', {'airplanes': airplanes})
 
-def flight_list(request):
+@login_required
+def list_flights(request):
     flights = Flight.objects.all()
     return render(request, 'flight_list.html', {'flights': flights})
 
@@ -36,7 +38,7 @@ def create_reservation(request):
     return render(request, 'create_reservation.html', {'form': form})
 
 @login_required
-def edit_reservation(request, reservation_id):
+def update_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
     if request.method == 'POST':
         form = ReservationForm(request.POST, instance=reservation)
@@ -57,15 +59,18 @@ def delete_reservation(request, reservation_id):
 
     return render(request, 'delete_reservation.html', {'reservation': reservation})
 
-def customer_list(request):
+
+@login_required
+def list_customers(request):
     customers = Customer.objects.all()
     return render(request, 'customer_list.html', {'customers' : customers})
 
-def show_flight_reservation(request, flight_id):
+@login_required
+def flight_detail(request, flight_id):
     flight = get_object_or_404(Flight, id=flight_id)
     reservations = Reservation.objects.filter(flight=flight).select_related('customer')
     occupied_seats = reservations.values_list('seat_number', flat=True).order_by('seat_number')
-    return render(request, 'flight_details.html', {
+    return render(request, 'flight_detail.html', {
         'reservations': reservations,
         'flight': flight,
         'occupied_seats': occupied_seats
