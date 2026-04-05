@@ -20,6 +20,7 @@
             </button>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <div class="navbar-nav mx-auto gap-2">
+                    <a class="nav-link {% if request.path == '/airplanes/' %}active text-white{% else %} text-white-50 link-light {% endif %}" href="/airplanes/">Aviões</a>
                     <a class="nav-link {% if request.path == '/flights/' %}active text-white{% else %} text-white-50 link-light {% endif %}" href="/flights/">Voos</a>
                     <a class="nav-link {% if request.path == '/customers/' %}active{% else %} text-white-50 link-light {% endif %}" href="/customers/">Clientes</a>
                     <a class="nav-link {% if request.path == '/reserve/' %}active{% else %} text-white-50 link-light {% endif %}" href="/reserve/">Reservas</a>

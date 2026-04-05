@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ReservationForm, AirplaneForm
-from .models import Flight, Customer, Reservation
+from .models import Flight, Customer, Reservation, Airplane
 
 @login_required
 def airplane_registration(request):
@@ -14,6 +14,10 @@ def airplane_registration(request):
         form = AirplaneForm()
 
     return render(request, 'airplane_registration.html', {'form': form})
+
+def airplane_list(request):
+    airplanes = Airplane.objects.all()
+    return render(request, 'airplane_list.html', {'airplanes': airplanes})
 
 def flight_list(request):
     flights = Flight.objects.all()
