@@ -31,6 +31,19 @@ def create_reservation(request):
 
     return render(request, 'create_reservation.html', {'form': form})
 
+@login_required
+def edit_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=reservation)
+        if form.is_valid():
+            form.save()
+            return redirect(f'/flights/{reservation.flight.id}/')
+    else:
+        form = ReservationForm(instance=reservation)
+
+    return render(request, 'edit_reservation.html', {'form': form})
+
 def customer_list(request):
     customers = Customer.objects.all()
     return render(request, 'customer_list.html', {'customers' : customers})
