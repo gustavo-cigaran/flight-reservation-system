@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('airplanes/', list_airplanes),
     path('airplanes/register/', create_airplane),
+    path('airplanes/edit/<int:airplane_id>/', update_airplane),
     path('flights/', list_flights, name='flight_list'),
     path('reserve/', create_reservation),
     path('flights/edit/<int:reservation_id>/', update_reservation),

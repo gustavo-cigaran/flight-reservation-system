@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Avião{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Editar Avião</h1>
+
+    <form method="POST" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+{% endblock %}
