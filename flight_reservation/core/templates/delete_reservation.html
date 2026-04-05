@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deletar Reserva de Voo</title>
-</head>
-<body>
-    <h1>Deletar Reserva de Voo</h1>
+{% extends 'base.html' %}
 
-    <form method="POST">
+{% block title %}Deletar Reserva de Voo{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Deletar Reserva de Voo</h1>
+
+    <form method="POST" class="card p-4 shadow-sm">
         {% csrf_token %}
-        <p>Cliente: {{ reservation.customer.name }}</p>
-        <p>Voo: {{ reservation.flight.origin }} -> {{ reservation.flight.destination }}</p>
-        <p>Assento: {{ reservation.seat_number }}</p>
+        <p class="form-label">Cliente: {{ reservation.customer.name }}</p>
+        <p class="form-label">Voo: {{ reservation.flight.origin }} -> {{ reservation.flight.destination }}</p>
+        <p class="form-label">Assento: {{ reservation.seat_number }}</p>
         <p>Tem certeza que deseja deletar essa reserva?</p>
-        <a href="/flights/">Cancelar</a>
-        <button type="submit">Confirmar</button>
+        <div class="d-flex gap-2">
+            <a href="/flights/" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-danger">Confirmar</button>
+        </div>
     </form>
-</body>
-</html>
+{% endblock %}

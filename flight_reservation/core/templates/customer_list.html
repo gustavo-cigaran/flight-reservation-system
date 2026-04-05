@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
-</head>
-<body>
-    <h1>Clientes</h1>
-    <ul>
+{% extends 'base.html' %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Lista de Clientes</h1>
+    <ul class="list-group">
         {% for customer in customers %}
-            <li>
+            <li class="list-group-item">
                 {{ customer.name }} | {{ customer.contact }} -> {{ customer.reservation_set.count }} reservation{{ customer.reservation_set.count|pluralize }} -> Último voo: {{ customer.reservation_set.last }}
             </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

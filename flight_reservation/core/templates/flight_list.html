@@ -1,27 +1,28 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voos</title>
-</head>
-<body>
-    <h1>Voos</h1>
-    <ul>
-        {% for flight in flights %}
-            <li>
-                {{ flight.id }} {{ flight.origin }} -> {{ flight.destination }} | {{ flight.airplane }} | {{ flight.departure_time }}
-            </li>
-        {% endfor %}
-    </ul>
+{% extends 'base.html' %}
 
-    {% if user.is_authenticated %}
-        <p>Olá, {{ user.username }}</p>
+{% block title %}Voos{% endblock %}
 
-        <form action="/logout/" method="POST">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-    {% endif %}
-</body>
-</html>
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Origem</th>
+                <th>Destino</th>
+                <th>Avião</th>
+                <th>Hora de Saída</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flight in flights %}
+            <tr>
+                <td>{{ flight.id }}</td>
+                <td>{{ flight.origin }}</td>
+                <td>{{ flight.destination }}</td>
+                <td>{{ flight.airplane }}</td>
+                <td>{{ flight.departure_time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
