@@ -73,6 +73,15 @@ def update_flight(request, flight_id):
     return render(request, 'edit_flight.html', {'form': form})
 
 @login_required
+def delete_flight(request, flight_id):
+    flight = get_object_or_404(Flight, id=flight_id)
+    if request.method == 'POST':
+        flight.delete()
+        return redirect('/flights/')
+
+    return render(request, 'delete_flight.html', {'flight': flight})
+
+@login_required
 def create_reservation(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)

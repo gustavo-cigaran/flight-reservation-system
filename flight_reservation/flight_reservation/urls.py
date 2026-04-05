@@ -14,6 +14,7 @@ urlpatterns = [
     path('flights/', list_flights, name='flight_list'),
     path('flights/register/', create_flight),
     path('flights/edit/<int:flight_id>/', update_flight),
+    path('flights/delete/<int:flight_id>/', delete_flight),
     path('reserve/', create_reservation),
     path('flights/edit/<int:reservation_id>/', update_reservation),
     path('flights/delete/<int:reservation_id>/', delete_reservation),
