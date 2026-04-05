@@ -34,6 +34,15 @@ def update_airplane(request, airplane_id):
     return render(request, 'edit_airplane.html', {'form': form})
 
 @login_required
+def delete_airplane(request, airplane_id):
+    airplane = get_object_or_404(Airplane, id=airplane_id)
+    if request.method == 'POST':
+        airplane.delete()
+        return redirect('/airplanes/')
+
+    return render(request, 'delete_airplane.html', {'airplane': airplane})
+
+@login_required
 def list_flights(request):
     flights = Flight.objects.all()
     return render(request, 'flight_list.html', {'flights': flights})
