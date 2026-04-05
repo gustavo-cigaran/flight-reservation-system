@@ -44,6 +44,15 @@ def edit_reservation(request, reservation_id):
 
     return render(request, 'edit_reservation.html', {'form': form})
 
+@login_required
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    if request.method == 'POST':
+        reservation.delete()
+        return redirect('/flights/')
+
+    return render(request, 'delete_reservation.html', {'reservation': reservation})
+
 def customer_list(request):
     customers = Customer.objects.all()
     return render(request, 'customer_list.html', {'customers' : customers})
