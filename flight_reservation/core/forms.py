@@ -15,6 +15,15 @@ class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ['customer', 'flight', 'seat_number']
+        widgets = {
+            'customer': forms.Select(attrs={'class': 'form-select'}),
+            'flight': forms.Select(attrs={'class': 'form-select'}),
+            'seat_number': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: 12',
+                'min': '1'
+            }),
+        }
 
     def clean(self):
         cleaned_data = super().clean()

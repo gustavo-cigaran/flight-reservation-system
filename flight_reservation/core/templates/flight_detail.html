@@ -16,4 +16,7 @@
     <div class="card p-4 shadow-sm mb-4">
         <p class="form-label">{{ occupied_seats|join:", " }}</p>
     </div>
+    <a href="/flights/edit/{{ flight.id }}/" class="btn btn-primary">Editar Voo</a>
+    <a href="/flights/delete/{{ flight.id }}/" class="btn btn-danger">Deletar Voo</a>
+    <a href="/flights/" class="btn btn-secondary">Voltar para Lista de Voos</a>
 {% endblock %}
