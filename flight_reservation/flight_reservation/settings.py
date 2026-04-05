@@ -52,10 +52,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'flight_reservation.urls'
 
-LOGIN_REDIRECT_URL = '/flights/'
-LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_REDIRECT_URL = 'flight_list'
+LOGOUT_REDIRECT_URL = 'login'
 
-LOGIN_URL = '/login/'
+LOGIN_URL = 'login'
 
 TEMPLATES = [
     {
