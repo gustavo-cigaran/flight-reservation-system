@@ -19,6 +19,9 @@ urlpatterns = [
     path('flights/edit/<int:reservation_id>/', update_reservation),
     path('flights/delete/<int:reservation_id>/', delete_reservation),
     path('customers/', list_customers),
+    path('customers/register/', create_customer),
+    path('customers/edit/<int:customer_id>/', update_customer),
+    path('customers/delete/<int:customer_id>/', delete_customer),
     path('flights/<int:flight_id>/', flight_detail, name='flight_detail'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout')
 ]

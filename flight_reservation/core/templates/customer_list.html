@@ -3,12 +3,37 @@
 {% block title %}Clientes{% endblock %}
 
 {% block content %}
-    <h1 class="text-dark fw-bold mb-4">Clientes</h1>
-    <ul class="list-group">
-        {% for customer in customers %}
-            <li class="list-group-item">
-                {{ customer.name }} | {{ customer.contact }} -> {{ customer.reservation_set.count }} reservation{{ customer.reservation_set.count|pluralize }} -> Último voo: {{ customer.reservation_set.last }}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-dark fw-bold mb-0">Clientes</h1>
+        <a href="/customers/register/" class="btn btn-primary">Registrar Cliente</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Quantidade de Reservas</th>
+                <th>Última Reserva</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.reservation_set.count }}</td>
+                {% if customer.reservation_set.last %}
+                    <td>{{ customer.reservation_set.last }}</td>
+                {% else %}
+                    <td>Nenhuma reserva</td>
+                {% endif %}
+                <td>
+                    <a href="/customers/edit/{{ customer.id }}/" class="btn btn-sm btn-outline-primary">Editar</a>
+                    <a href="/customers/delete/{{ customer.id }}/" class="btn btn-sm btn-outline-danger">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

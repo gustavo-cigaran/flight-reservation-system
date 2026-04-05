@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import ReservationForm, AirplaneForm, FlightForm
+from .forms import ReservationForm, AirplaneForm, FlightForm, CustomerForm
 from .models import Flight, Customer, Reservation, Airplane
 
 @login_required
@@ -120,6 +120,40 @@ def delete_reservation(request, reservation_id):
 def list_customers(request):
     customers = Customer.objects.all()
     return render(request, 'customer_list.html', {'customers' : customers})
+
+@login_required
+def create_customer(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/customers/')
+    else:
+        form = CustomerForm()
+
+    return render(request, 'customer_registration.html', {'form': form})
+
+@login_required
+def update_customer(request, customer_id):
+    customer = get_object_or_404(Customer, id=customer_id)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('/customers/')
+    else:
+        form = CustomerForm(instance=customer)
+
+    return render(request, 'edit_customer.html', {'form': form})
+
+@login_required
+def delete_customer(request, customer_id):
+    customer = get_object_or_404(Customer, id=customer_id)
+    if request.method == 'POST':
+        customer.delete()
+        return redirect('/customers/')
+
+    return render(request, 'delete_customer.html', {'customer': customer})
 
 @login_required
 def flight_detail(request, flight_id):

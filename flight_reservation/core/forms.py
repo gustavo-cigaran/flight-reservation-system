@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
-from .models import Reservation, Airplane, Flight
+from .models import Reservation, Airplane, Flight, Customer
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
@@ -58,4 +58,13 @@ class FlightForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'datetime-local'
             }),
+        }
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['name', 'email']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex: João Silva'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ex: joao@example.com'}),
         }
