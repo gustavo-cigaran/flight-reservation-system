@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import ReservationForm, AirplaneForm
+from .forms import ReservationForm, AirplaneForm, FlightForm
 from .models import Flight, Customer, Reservation, Airplane
 
 @login_required
@@ -46,6 +46,18 @@ def delete_airplane(request, airplane_id):
 def list_flights(request):
     flights = Flight.objects.all()
     return render(request, 'flight_list.html', {'flights': flights})
+
+@login_required
+def create_flight(request):
+    if request.method == 'POST':
+        form = FlightForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/flights/')
+    else:
+        form = FlightForm()
+
+    return render(request, 'flight_registration.html', {'form': form})
 
 @login_required
 def create_reservation(request):

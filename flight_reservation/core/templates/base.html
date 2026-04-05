@@ -20,10 +20,10 @@
             </button>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <div class="navbar-nav mx-auto gap-2">
-                    <a class="nav-link {% if request.path == '/airplanes/' %}active text-white{% else %} text-white-50 link-light {% endif %}" href="/airplanes/">Aviões</a>
-                    <a class="nav-link {% if request.path == '/flights/' %}active text-white{% else %} text-white-50 link-light {% endif %}" href="/flights/">Voos</a>
-                    <a class="nav-link {% if request.path == '/customers/' %}active{% else %} text-white-50 link-light {% endif %}" href="/customers/">Clientes</a>
-                    <a class="nav-link {% if request.path == '/reserve/' %}active{% else %} text-white-50 link-light {% endif %}" href="/reserve/">Reservas</a>
+                    <a class="nav-link {% if request.path == '/airplanes/' %}active{% endif %}" href="/airplanes/">Aviões</a>
+                    <a class="nav-link {% if request.path == '/flights/' %}active{% endif %}" href="/flights/">Voos</a>
+                    <a class="nav-link {% if request.path == '/customers/' %}active{% endif %}" href="/customers/">Clientes</a>
+                    <a class="nav-link {% if request.path == '/reserve/' %}active{% endif %}" href="/reserve/">Reservas</a>
                 </div>
                 <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
                     {% if user.is_authenticated %}
