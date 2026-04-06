@@ -5,11 +5,23 @@ from .models import Reservation, Airplane, Flight, Customer
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'autofocus': 'autofocus'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'autofocus': 'autofocus'}),
+        error_messages={
+            'required': 'Este campo é obrigatório.',
+        }
     )
+    
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        error_messages={
+            'required': 'Este campo é obrigatório.',
+        }
     )
+
+    error_messages = {
+        'invalid_login': "Por favor, insira usuário e senha corretos. Note que ambos os campos podem ser sensíveis a maiúsculas e minúsculas.",
+        'inactive': "Esta conta está inativa.",
+    }
 
 class ReservationForm(forms.ModelForm):
     class Meta:
