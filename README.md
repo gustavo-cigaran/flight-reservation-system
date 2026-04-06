@@ -256,7 +256,7 @@ Sim, já utilizei Git para alguns projetos, incluindo:
 
 ### Como você explicaria para uma pessoa leiga o que é um banco de dados?
 
-Diria que um banco de dados é como se fosse uma biblioteca contendo vários livros, onde cada livro contém registros que armazenam informações e essas informações ficam guardadas e organizadas
+Diria que um banco de dados é como se fosse uma biblioteca contendo vários livros, onde cada livro contém registros que armazenam informações e essas informações ficam guardadas e organizadas.
 
 ### O que é uma variável na programação?
 
@@ -275,5 +275,7 @@ Desenvolvi um sistema financeiro utilizando React no front-end e Java com Spring
 ### Desafio 1: Two Sum
 
 Encontrar índices de dois números que somam um target específico.
+
+[Veja o desafio aqui!](desafio_two_sum/desafio.py)
 
 **Desenvolvido para o desafio técnico da aDoc** 🚀
