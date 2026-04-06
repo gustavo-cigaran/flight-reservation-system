@@ -29,15 +29,33 @@ class ReservationForm(forms.ModelForm):
         cleaned_data = super().clean()
 
         flight = cleaned_data.get('flight')
+        seat_number = cleaned_data.get('seat_number')
 
-        if flight:
-            reservations = Reservation.objects.filter(flight=flight)
-            if self.instance.pk:
-                reservations = reservations.exclude(pk=self.instance.pk)
-            if reservations.count() >= flight.airplane.capacity:
-                raise ValidationError("O voo já atingiu a capacidade máxima de reservas.")
-            
+        if not flight or not seat_number:
             return cleaned_data
+        
+        capacity = flight.airplane.capacity
+
+        if seat_number > capacity:
+            self.add_error('seat_number', f"O número do assento não pode ser maior que a capacidade do avião ({capacity}).")
+
+        existing_reservation = Reservation.objects.filter(flight=flight, seat_number=seat_number)
+
+        if self.instance.pk:
+            existing_reservation = existing_reservation.exclude(pk=self.instance.pk)
+
+        if existing_reservation.exists():
+            self.add_error('seat_number', "Este assento já está reservado para este voo.")
+
+        total_reservations = Reservation.objects.filter(flight=flight)
+
+        if self.instance.pk:
+            total_reservations = total_reservations.exclude(pk=self.instance.pk)
+
+        if total_reservations.count() >= capacity:
+            raise ValidationError("Este voo já atingiu a capacidade máxima de reservas.")
+            
+        return cleaned_data
 
 class AirplaneForm(forms.ModelForm):
     class Meta:
