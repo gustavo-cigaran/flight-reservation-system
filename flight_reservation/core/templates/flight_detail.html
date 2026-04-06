@@ -1,26 +1,52 @@
 {% extends 'base.html' %}
+
+{% block title %}Detalhes do Voo{% endblock %}
+
 {% block content %}
     <h1 class="text-dark fw-bold mb-4">Detalhes do Voo: {{ flight.origin }} -> {{ flight.destination }}</h1>
     <div class="card p-4 shadow-sm mb-4">
-        <p class="form-label">Origem: {{ flight.origin }}</p>
-        <p class="form-label">Destino: {{ flight.destination }}</p>
-        <p class="form-label">Avião: {{ flight.airplane }}</p>
+        <div class="row">
+            <div class="col-md-4">
+                <small class="text-muted">Avião</small>
+                <p class="form-label">{{ flight.origin }}</p>
+            </div>
+            <div class="col-md-4">
+                <small class="text-muted">Data e Hora de Saída</small>
+                <p class="form-label">{{ flight.departure_time|date:"d/m/Y H:i" }}</p>
+            </div>
+            <div class="col-md-4">
+                <small class="text-muted">Capacidade</small>
+                <p class="form-label">{{ flight.airplane.capacity }}</p>
+            </div>
+        </div>
     </div>
     <h2 class="text-dark fw-bold mb-3">Passageiros: </h2>
-    <ul class="list-group mb-4">
-        {% for reservation in reservations %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <strong>{{ reservation.record_locator }}</strong> | {{ reservation.customer.name }}
-                </div>
-                <span class="badge bg-primary rounded-pill">Assento {{ reservation.seat_number }}</span>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if reservations %}
+        <ul class="list-group mb-4">
+            {% for reservation in reservations %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ reservation.record_locator }}</strong> | {{ reservation.customer.name }}
+                    </div>
+                    <span class="badge bg-primary">Assento {{ reservation.seat_number }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">Nenhum passageiro registrado para este voo.</p>
+    {% endif %}
     <h2 class="text-dark fw-bold mb-3">Assentos Ocupados: </h2>
-    <div class="card p-4 shadow-sm mb-4">
-        <p class="form-label">{{ occupied_seats|join:", " }}</p>
-    </div>
+    {% if occupied_seats %}
+        <div class="card p-4 shadow-sm mb-4">
+            <div class="d-flex flex-wrap gap-2">
+                {% for seat in occupied_seats %}
+                    <span class="badge bg-danger">{{ seat }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">Nenhum assento ocupado.</p>
+    {% endif %}
     <a href="/flights/edit/{{ flight.id }}/" class="btn btn-primary">Editar Voo</a>
     <a href="/flights/delete/{{ flight.id }}/" class="btn btn-danger">Deletar Voo</a>
     <a href="/flights/" class="btn btn-secondary">Voltar para Lista de Voos</a>
