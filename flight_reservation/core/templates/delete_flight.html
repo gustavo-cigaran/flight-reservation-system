@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Deletar Voo{% endblock %}
+
+{% block content %}
+    <h1 class="text-dark fw-bold mb-4">Deletar Voo</h1>
+
+    <form method="POST" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        <p class="form-label">Origem: {{ flight.origin }}</p>
+        <p class="form-label">Destino: {{ flight.destination }}</p>
+        <p class="form-label">Data e Hora de Saída: {{ flight.departure_time }}</p>
+        <p>Tem certeza que deseja deletar esse voo?</p>
+        <div class="d-flex gap-2">
+            <a href="/flights/" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-danger">Confirmar</button>
+        </div>
+    </form>
+{% endblock %}

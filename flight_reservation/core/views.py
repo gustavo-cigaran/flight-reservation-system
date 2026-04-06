@@ -1,11 +1,87 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ReservationForm
-from .models import Flight, Customer, Reservation
+from django.contrib.auth.decorators import login_required
+from .forms import ReservationForm, AirplaneForm, FlightForm, CustomerForm
+from .models import Flight, Customer, Reservation, Airplane
 
-def flight_list(request):
+@login_required
+def create_airplane(request):
+    if request.method == 'POST':
+        form = AirplaneForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/airplanes/')
+    else:
+        form = AirplaneForm()
+
+    return render(request, 'airplane_registration.html', {'form': form})
+
+@login_required
+def list_airplanes(request):
+    airplanes = Airplane.objects.all()
+    return render(request, 'airplane_list.html', {'airplanes': airplanes})
+
+@login_required
+def update_airplane(request, airplane_id):
+    airplane = get_object_or_404(Airplane, id=airplane_id)
+    if request.method == 'POST':
+        form = AirplaneForm(request.POST, instance=airplane)
+        if form.is_valid():
+            form.save()
+            return redirect('/airplanes/')
+    else:
+        form = AirplaneForm(instance=airplane)
+
+    return render(request, 'edit_airplane.html', {'form': form})
+
+@login_required
+def delete_airplane(request, airplane_id):
+    airplane = get_object_or_404(Airplane, id=airplane_id)
+    if request.method == 'POST':
+        airplane.delete()
+        return redirect('/airplanes/')
+
+    return render(request, 'delete_airplane.html', {'airplane': airplane})
+
+@login_required
+def list_flights(request):
     flights = Flight.objects.all()
     return render(request, 'flight_list.html', {'flights': flights})
 
+@login_required
+def create_flight(request):
+    if request.method == 'POST':
+        form = FlightForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/flights/')
+    else:
+        form = FlightForm()
+
+    return render(request, 'flight_registration.html', {'form': form})
+
+@login_required
+def update_flight(request, flight_id):
+    flight = get_object_or_404(Flight, id=flight_id)
+    if request.method == 'POST':
+        form = FlightForm(request.POST, instance=flight)
+        if form.is_valid():
+            form.save()
+            return redirect('/flights/')
+    else:
+        form = FlightForm(instance=flight)
+
+    return render(request, 'edit_flight.html', {'form': form})
+
+@login_required
+def delete_flight(request, flight_id):
+    flight = get_object_or_404(Flight, id=flight_id)
+    if request.method == 'POST':
+        flight.delete()
+        return redirect('/flights/')
+
+    return render(request, 'delete_flight.html', {'flight': flight})
+
+@login_required
 def create_reservation(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
@@ -17,15 +93,74 @@ def create_reservation(request):
 
     return render(request, 'create_reservation.html', {'form': form})
 
-def customer_list(request):
+@login_required
+def update_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=reservation)
+        if form.is_valid():
+            form.save()
+            return redirect(f'/flights/{reservation.flight.id}/')
+    else:
+        form = ReservationForm(instance=reservation)
+
+    return render(request, 'edit_reservation.html', {'form': form})
+
+@login_required
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    if request.method == 'POST':
+        reservation.delete()
+        return redirect('/flights/')
+
+    return render(request, 'delete_reservation.html', {'reservation': reservation})
+
+
+@login_required
+def list_customers(request):
     customers = Customer.objects.all()
     return render(request, 'customer_list.html', {'customers' : customers})
 
-def show_flight_reservation(request, flight_id):
+@login_required
+def create_customer(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/customers/')
+    else:
+        form = CustomerForm()
+
+    return render(request, 'customer_registration.html', {'form': form})
+
+@login_required
+def update_customer(request, customer_id):
+    customer = get_object_or_404(Customer, id=customer_id)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('/customers/')
+    else:
+        form = CustomerForm(instance=customer)
+
+    return render(request, 'edit_customer.html', {'form': form})
+
+@login_required
+def delete_customer(request, customer_id):
+    customer = get_object_or_404(Customer, id=customer_id)
+    if request.method == 'POST':
+        customer.delete()
+        return redirect('/customers/')
+
+    return render(request, 'delete_customer.html', {'customer': customer})
+
+@login_required
+def flight_detail(request, flight_id):
     flight = get_object_or_404(Flight, id=flight_id)
     reservations = Reservation.objects.filter(flight=flight).select_related('customer')
     occupied_seats = reservations.values_list('seat_number', flat=True).order_by('seat_number')
-    return render(request, 'flight_details.html', {
+    return render(request, 'flight_detail.html', {
         'reservations': reservations,
         'flight': flight,
         'occupied_seats': occupied_seats
