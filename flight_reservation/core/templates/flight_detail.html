@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="text-dark fw-bold mb-4">Detalhes do Voo: {{ flight.id }} - {{ flight.origin }} -> {{ flight.destination }}</h1>
+    <h1 class="text-dark fw-bold mb-4">Detalhes do Voo: {{ flight.origin }} -> {{ flight.destination }}</h1>
     <div class="card p-4 shadow-sm mb-4">
         <p class="form-label">Origem: {{ flight.origin }}</p>
         <p class="form-label">Destino: {{ flight.destination }}</p>
@@ -9,7 +9,12 @@
     <h2 class="text-dark fw-bold mb-3">Passageiros: </h2>
     <ul class="list-group mb-4">
         {% for reservation in reservations %}
-            <li class="list-group-item">{{ reservation.customer.name }} - Assento: {{ reservation.seat_number }}</li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ reservation.record_locator }}</strong> | {{ reservation.customer.name }}
+                </div>
+                <span class="badge bg-primary rounded-pill">Assento {{ reservation.seat_number }}</span>
+            </li>
         {% endfor %}
     </ul>
     <h2 class="text-dark fw-bold mb-3">Assentos Ocupados: </h2>
