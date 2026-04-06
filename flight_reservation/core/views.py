@@ -9,7 +9,7 @@ def create_airplane(request):
         form = AirplaneForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/flights/')
+            return redirect('/airplanes/')
     else:
         form = AirplaneForm()
 
